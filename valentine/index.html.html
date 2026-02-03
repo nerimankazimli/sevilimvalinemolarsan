@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>💘 Mənim Valentinim olarsan?</title>
+
+  <style>
+    :root{
+      --bg1:#ff5aa5;
+      --bg2:#8b5cf6;
+      --bg3:#22c55e;
+      --card:#ffffffee;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --yes:#22c55e;
+      --no:#ef4444;
+      --shadow: 0 18px 60px rgba(0,0,0,.18);
+      --radius: 22px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+      color:var(--text);
+      overflow:hidden;
+      background: radial-gradient(1200px 800px at 20% 20%, #ffd1e8 0%, transparent 55%),
+                  radial-gradient(900px 600px at 80% 30%, #d8b4fe 0%, transparent 60%),
+                  radial-gradient(900px 700px at 60% 90%, #bbf7d0 0%, transparent 60%),
+                  linear-gradient(135deg, var(--bg1), var(--bg2));
+      position:relative;
+    }
+
+    .sparkles{
+      position:absolute; inset:0; pointer-events:none;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.55) 0 2px, transparent 3px),
+        radial-gradient(circle at 35% 80%, rgba(255,255,255,.35) 0 1px, transparent 2px),
+        radial-gradient(circle at 70% 30%, rgba(255,255,255,.45) 0 2px, transparent 3px),
+        radial-gradient(circle at 90% 60%, rgba(255,255,255,.30) 0 1px, transparent 2px);
+      background-size: 280px 280px, 220px 220px, 320px 320px, 200px 200px;
+      animation: drift 10s linear infinite;
+      opacity:.55;
+      filter: blur(.1px);
+    }
+    @keyframes drift{
+      0%{transform:translate3d(0,0,0)}
+      50%{transform:translate3d(-30px, 20px, 0)}
+      100%{transform:translate3d(0,0,0)}
+    }
+
+    .hearts{position:absolute; inset:0; pointer-events:none; overflow:hidden;}
+    .heart{
+      position:absolute;
+      width:14px; height:14px;
+      transform: rotate(45deg);
+      opacity:.85;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,.10));
+      animation: floatUp linear infinite;
+    }
+    .heart::before,.heart::after{
+      content:"";
+      position:absolute;
+      width:14px; height:14px;
+      background: rgba(255,255,255,.92);
+      border-radius: 50%;
+    }
+    .heart{ background: rgba(255,255,255,.92); }
+    .heart::before{ left:-7px; top:0; }
+    .heart::after{ left:0; top:-7px; }
+
+    @keyframes floatUp{
+      from{ transform: translateY(40vh) rotate(45deg) scale(var(--s)); opacity:0; }
+      10%{ opacity:.9; }
+      to{ transform: translateY(-120vh) rotate(45deg) scale(var(--s)); opacity:0; }
+    }
+
+    .wrap{
+      position:relative;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+    }
+
+    .card{
+      width:min(650px, 94vw);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.45);
+      padding: 28px 22px 22px;
+      text-align:center;
+      position:relative;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(0,0,0,.06);
+      color: var(--muted);
+      font-weight:600;
+      font-size:14px;
+      margin-bottom:14px;
+    }
+
+    h1{
+      margin: 6px 0 10px;
+      font-size: clamp(26px, 4.4vw, 40px);
+      line-height:1.12;
+      letter-spacing:-.02em;
+    }
+
+    .sub{
+      margin: 0 auto 18px;
+      max-width: 54ch;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.55;
+    }
+
+    .name{
+      display:inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: rgba(255, 90, 165, .12);
+      border: 1px solid rgba(255, 90, 165, .18);
+      color:#9f1239;
+      font-weight:900;
+    }
+
+    .btnRow{
+      margin-top: 18px;
+      display:flex;
+      gap: 12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      position:relative;
+      min-height: 62px;
+    }
+
+    button{
+      border:0;
+      border-radius: 16px;
+      padding: 12px 18px;
+      font-size: 18px;
+      font-weight: 900;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease, font-size .12s ease;
+      user-select:none;
+    }
+    button:active{ transform: translateY(1px) scale(.99); }
+
+    #yes{
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color:white;
+      box-shadow: 0 14px 28px rgba(34,197,94,.28);
+    }
+    #yes:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+
+    #no{
+      background: linear-gradient(135deg, #ef4444, #be123c);
+      color:white;
+      box-shadow: 0 14px 28px rgba(239,68,68,.25);
+      position:relative;
+    }
+    #no:hover{ filter: brightness(1.02); }
+
+    .hint{
+      margin-top: 12px;
+      font-size: 13px;
+      color: rgba(107,114,128,.95);
+    }
+
+    .loveBox{
+      margin: 18px auto 0;
+      width:min(560px, 92vw);
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: 18px;
+      padding: 14px 16px;
+      text-align:left;
+      display:none;
+    }
+    .loveBox strong{display:block; margin-bottom:6px}
+    .loveBox p{margin:0; color:#374151; line-height:1.6}
+
+    .footer{
+      margin-top: 16px;
+      font-size: 12.5px;
+      color: rgba(107,114,128,.9);
+    }
+
+    .overlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.35);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 50;
+    }
+    .modal{
+      width:min(760px, 96vw);
+      background: rgba(255,255,255,.92);
+      border-radius: 22px;
+      box-shadow: 0 26px 90px rgba(0,0,0,.25);
+      padding: 22px 20px;
+      border: 1px solid rgba(255,255,255,.35);
+      backdrop-filter: blur(8px);
+      position:relative;
+      overflow:hidden;
+    }
+    .modal h2{
+      margin:0 0 10px;
+      font-size: clamp(22px, 3.8vw, 32px);
+      letter-spacing:-.02em;
+    }
+    .modal .letter{
+      margin: 0;
+      line-height:1.75;
+      color:#374151;
+      font-size: 15.8px;
+    }
+    .close{
+      position:absolute;
+      top: 12px; right: 12px;
+      width: 42px; height: 42px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.06);
+      color:#111827;
+      font-weight:900;
+      font-size:18px;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      border: 1px solid rgba(0,0,0,.06);
+    }
+    .close:hover{ background: rgba(0,0,0,.09); }
+
+    canvas#confetti{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index: 60;
+      display:none;
+    }
+
+    .shake{ animation: shake .25s ease-in-out; }
+    @keyframes shake{
+      0%,100%{ transform: translateX(0); }
+      25%{ transform: translateX(-6px); }
+      75%{ transform: translateX(6px); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .sparkles,.heart{ animation:none !important; }
+      button{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sparkles"></div>
+  <div class="hearts" id="hearts"></div>
+
+  <canvas id="confetti"></canvas>
+
+  <div class="wrap">
+    <div class="card" id="card">
+      <div class="badge" id="badge">💌 Sənə balaca bir sualım var…</div>
+
+      <h1>
+        <span id="who" class="name">Sevilimmm</span>,
+        mənim <span style="white-space:nowrap">Valentinim</span> olarsan? 💖
+      </h1>
+
+      <p class="sub" id="sub">
+        Aşkım… bunu yazanda ürəyim elə döyünür ki. Sənin “Bəli” deməyin mənim üçün
+        dünyanın ən gözəl səsi olar. 🫶✨
+      </p>
+
+      <div class="btnRow" id="btnRow">
+        <button id="yes">Bəli, aşkım! 💚</button>
+        <button id="no">Yox… 🙈</button>
+      </div>
+
+      <div class="hint" id="hint">İpucu: “Yox” düyməsi səndən utanıb qaçır 😅</div>
+
+      <div class="loveBox" id="loveBox">
+        <strong>💗 Balaca sözüm var, bəbəm:</strong>
+        <p id="loveText"></p>
+      </div>
+
+      <div class="footer">P.S. Bu səhifə yalnız sənin üçün yazıldı, aşkımmmmmmm 💞</div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Sevgi məktubu">
+      <div class="close" id="close" title="Bağla">✕</div>
+      <h2 id="modalTitle">💞</h2>
+      <p class="letter" id="modalLetter"></p>
+    </div>
+  </div>
+
+  <script>
+    /**************
+     * ÖZƏLLƏŞDİRMƏ
+     **************/
+    const NAME = "Sevilim";
+    const QUESTION_BADGE = "💌 Sənə balaca bir sualım var…";
+    const SUBTEXT = "Aşkım… bunu yazanda ürəyim elə döyünür ki. Sənin “Bəli” deməyin mənim üçün dünyanın ən xoş xəbəri olar. 🫶✨";
+
+    const NO_PHRASES = [
+      "Yox… 🙈",
+      "Əminsən, balam? 🥺",
+      "Bir də düşün, bəbəm… 💗",
+      "Mən səni çox sevirəmmmm 😭",
+      "Səninlə kardiyo edərəm 🏃‍♂️💞",
+      "Üzməyə gedərik 🏊‍♀️✨",
+      "Gül alaram… 😄 (amma mənim aşkım gül sevmir)",
+      "Səni qucaqlamaq istəyirəm… 🫂",
+      "Sən mənim hər şeyimsən 😢",
+      "Bilirem ki meni sevirsen 😌"
+    ];
+
+    const LOVE_LETTER =
+`<strong>${NAME}</strong>… aşkım, balam, bəbəm 💗<br><br>
+Səni öpməmişdən, qucaqlamamışdan qabaq onsuz da aşiq olmuşdum.
+Sən gələndən bəri içimdə qəribə bir rahatlıq var — sanki yerim tapılıb. ✨<br><br>
+Sən mənim <strong>hər şeyimsən</strong>, var-dövlətimsən… yaxşı ki varsan.
+Gülüşün ürəyimə ev kimidir, səsin isə ən sevdiyim mahnı. 🌙<br><br>
+Mən səninlə sadəcə “Valentin” günü yox…
+hər gün gülmək, hər gün qucaqlamaq, hər gün bir az da daha çox sevmək istəyirəm. 🫶<br><br>
+İndi o bir cümləni de, bəbəm:
+<strong>“Bəli.”</strong> 💘`;
+
+    /**************
+     * ELEMENTLƏR
+     **************/
+    const who = document.getElementById("who");
+    const sub = document.getElementById("sub");
+    const badge = document.getElementById("badge");
+    const yesBtn = document.getElementById("yes");
+    const noBtn  = document.getElementById("no");
+    const btnRow = document.getElementById("btnRow");
+    const hint   = document.getElementById("hint");
+    const card   = document.getElementById("card");
+
+    const loveBox  = document.getElementById("loveBox");
+    const loveText = document.getElementById("loveText");
+
+    const overlay    = document.getElementById("overlay");
+    const closeBtn   = document.getElementById("close");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalLetter= document.getElementById("modalLetter");
+
+    who.textContent = NAME;
+    badge.textContent = QUESTION_BADGE;
+    sub.textContent = SUBTEXT;
+
+    let noCount = 0;
+    let yesGrow = 0;
+
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    function moveNoButton(){
+      const cardRect = card.getBoundingClientRect();
+      const btnRect  = noBtn.getBoundingClientRect();
+      const padding = 18;
+
+      const maxX = (cardRect.width - btnRect.width) - padding*2;
+      const maxY = 140;
+
+      const x = Math.random() * maxX - maxX/2;
+      const y = (Math.random() * maxY) - maxY/2;
+
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function growYes(){
+      yesGrow += 1;
+      const font = 18 + yesGrow * 3.5;
+      const scale = 1 + yesGrow * 0.05;
+
+      yesBtn.style.fontSize = clamp(font, 18, 46) + "px";
+      yesBtn.style.transform = `scale(${clamp(scale, 1, 1.38)})`;
+    }
+
+    function tinyShake(el){
+      el.classList.remove("shake");
+      void el.offsetWidth;
+      el.classList.add("shake");
+      setTimeout(()=>el.classList.remove("shake"), 260);
+    }
+
+    noBtn.addEventListener("click", () => {
+      noCount++;
+      noBtn.textContent = NO_PHRASES[Math.min(noCount, NO_PHRASES.length - 1)];
+
+      growYes();
+      moveNoButton();
+      tinyShake(card);
+
+      if(noCount === 2){
+        loveBox.style.display = "block";
+        loveText.textContent = "Aşkım, sən güləndə mənim qəlbim yerindən çıxır… 💗";
+      }
+      if(noCount === 5){
+        loveText.textContent = "Balam, səninlə kardiyo edərəm, sonra da birlikdə gülərik — mənə elə bu kifayətdir. 🏃‍♂️💞";
+      }
+      if(noCount === 7){
+        loveText.textContent = "Bəbəm… sən mənim hər şeyimsən. Səni sevəcəm, həmişə. 🫶";
+      }
+      if(noCount >= 9){
+        loveText.textContent = "Bilirem ki meni sevirsen… mən də səni lap çox, askim. 😌💘";
+      }
+
+      hint.textContent = "“Yox” qaçdıqca mən daha da vuruluram… 😅";
+    });
+
+    /**************
+     * YES: səs + confetti + emosional modal
+     **************/
+    function playChime(){
+      try{
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const now = ctx.currentTime;
+
+        const o1 = ctx.createOscillator();
+        const o2 = ctx.createOscillator();
+        const g  = ctx.createGain();
+
+        o1.type = "sine";
+        o2.type = "triangle";
+        o1.frequency.setValueAtTime(523.25, now);
+        o2.frequency.setValueAtTime(659.25, now);
+
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(0.24, now + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
+
+        o1.connect(g); o2.connect(g);
+        g.connect(ctx.destination);
+
+        o1.start(now); o2.start(now);
+        o1.stop(now + 0.55); o2.stop(now + 0.55);
+      }catch(e){}
+    }
+
+    function openModal(){
+      modalTitle.textContent = `SEVİL… AŞKIMMMM 💞`;
+      modalLetter.innerHTML = LOVE_LETTER;
+
+      overlay.style.display = "flex";
+      overlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal(){
+      overlay.style.display = "none";
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    closeBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeModal(); });
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeModal(); });
+
+    yesBtn.addEventListener("click", () => {
+      playChime();
+      startConfetti();
+
+      noBtn.style.display = "none";
+      hint.textContent = "Aşkım… ürəyim sənin “Bəli”nə uçdu. İndi səni qucaqlamaq istəyirəm. 🫂💘";
+
+      yesBtn.textContent = "SƏNİ SEVİRƏM, AŞKIM ❤️";
+      yesBtn.style.transform = "scale(1.18)";
+      yesBtn.style.fontSize = "26px";
+
+      loveBox.style.display = "block";
+      loveText.textContent =
+        "Balam, bəbəm… səni öpməmişdən, qucaqlamamışdan qabaq onsuz da aşiq olmuşdum. Sən mənim hər şeyimsən, var-dövlətimsən. Yaxşı ki varsan. 💗";
+
+      openModal();
+    });
+
+    /**************
+     * Confetti (canvas)
+     **************/
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let confettiPieces = [];
+    let confettiOn = false;
+    let t0 = 0;
+
+    function resize(){
+      canvas.width = window.innerWidth * devicePixelRatio;
+      canvas.height = window.innerHeight * devicePixelRatio;
+      ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    function rand(a,b){ return a + Math.random()*(b-a); }
+
+    function makeConfetti(count=180){
+      confettiPieces = Array.from({length:count}, () => ({
+        x: rand(0, window.innerWidth),
+        y: rand(-window.innerHeight, 0),
+        w: rand(5, 10),
+        h: rand(8, 14),
+        vx: rand(-1.6, 1.6),
+        vy: rand(2.2, 5.6),
+        rot: rand(0, Math.PI),
+        vr: rand(-0.18, 0.18),
+        c: `hsl(${Math.floor(rand(0,360))} 90% 60%)`
+      }));
+    }
+
+    function drawConfetti(){
+      ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
+      for(const p of confettiPieces){
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.c;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      }
+    }
+
+    function step(ts){
+      if(!confettiOn) return;
+      if(!t0) t0 = ts;
+
+      for(const p of confettiPieces){
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+
+        if(p.y > window.innerHeight + 30){
+          p.y = rand(-120, -20);
+          p.x = rand(0, window.innerWidth);
+        }
+        if(p.x < -20) p.x = window.innerWidth + 20;
+        if(p.x > window.innerWidth + 20) p.x = -20;
+      }
+
+      drawConfetti();
+
+      if(ts - t0 > 6000){
+        stopConfetti();
+        return;
+      }
+      requestAnimationFrame(step);
+    }
+
+    function startConfetti(){
+      canvas.style.display = "block";
+      confettiOn = true;
+      t0 = 0;
+      makeConfetti(190);
+      requestAnimationFrame(step);
+    }
+    function stopConfetti(){
+      confettiOn = false;
+      canvas.style.display = "none";
+      ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
+    }
+
+    /**************
+     * Arxa fon ürəkləri
+     **************/
+    const heartsWrap = document.getElementById("hearts");
+    function spawnHearts(n=22){
+      heartsWrap.innerHTML = "";
+      for(let i=0;i<n;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        const left = Math.random() * 100;
+        const dur = rand(6.5, 12.5);
+        const delay = rand(0, 6);
+        const size = rand(0.7, 1.55);
+
+        h.style.left = left + "%";
+        h.style.bottom = rand(-20, 20) + "px";
+        h.style.animationDuration = dur + "s";
+        h.style.animationDelay = delay + "s";
+        h.style.setProperty("--s", size);
+
+        heartsWrap.appendChild(h);
+      }
+    }
+    spawnHearts(22);
+
+    noBtn.style.transform = "translate(0,0)";
+  </script>
+</body>
+</html>
